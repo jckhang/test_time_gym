@@ -1,0 +1,53 @@
+# Test-Time Gym Framework - Cursor Rules
+
+## Project Overview
+This is a Test-Time Gym framework for LLM agent test-time learning. The framework provides:
+- Safe flight booking simulation environment
+- Skill extraction and reuse mechanisms  
+- Thompson Sampling for exploration/exploitation
+- Comprehensive evaluation and OOD detection
+
+## Code Style & Conventions
+- Use Python 3.8+ with type hints
+- Follow PEP 8 with line length 100 characters
+- Use Pydantic models for data validation
+- Prefer composition over inheritance
+- Use descriptive variable and function names
+
+## Architecture Patterns
+- **Environment**: Gymnasium-compatible interface in `test_time_gym/envs/`
+- **Agents**: Policy implementations in `test_time_gym/agents/`
+- **Utils**: Shared utilities and models in `test_time_gym/utils/`
+- **Evaluation**: Metrics and analysis in `test_time_gym/evaluation/`
+
+## Key Files
+- `test_time_gym/envs/flight_booking_env.py`: Core environment implementation
+- `test_time_gym/utils/models.py`: Pydantic data models
+- `test_time_gym/utils/bandit.py`: Thompson Sampling implementation
+- `test_time_gym/agents/learning_agent.py`: Main learning agent
+- `examples/quick_demo.py`: Simple demonstration script
+
+## Testing & Development
+- Use `examples/quick_demo.py` for basic functionality testing
+- Use `examples/experiment_runner.py` for comprehensive experiments
+- All experiments should be reproducible with seeds
+- Log all trajectories for analysis
+
+## Safety Considerations
+- All operations are simulated (no real money)
+- Use ActionShield to prevent dangerous actions
+- Implement OOD detection for safety monitoring
+- Set hard limits on action attempts and budgets
+
+## Performance Requirements
+- Environment should handle 1000+ episodes efficiently
+- Skill extraction should scale to 100+ skills
+- Logging should be non-blocking and efficient
+- Memory usage should be bounded with sliding windows
+
+## When adding new features:
+1. Add appropriate Pydantic models to `models.py`
+2. Update environment if new actions/states needed
+3. Add evaluation metrics if introducing new behaviors
+4. Include safety checks in ActionShield
+5. Add tests and examples demonstrating the feature
