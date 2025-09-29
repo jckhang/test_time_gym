@@ -99,7 +99,7 @@ def run_experiment(args):
     # 生成报告
     if args.generate_report:
         visualizer = Visualizer(metrics)
-        report_path = f"/workspace/logs/evaluation/report_{args.agent_type}.html"
+        report_path = f"logs/evaluation/report_{args.agent_type}.html"
         visualizer.generate_evaluation_report(report_path)
         print(f"评估报告已保存: {report_path}")
     
@@ -184,8 +184,8 @@ def compare_agents(args):
     print(comparison_df.to_string(index=False))
     
     # 保存对比结果
-    comparison_df.to_csv("/workspace/logs/evaluation/agent_comparison.csv", index=False)
-    print("对比结果已保存到 /workspace/logs/evaluation/agent_comparison.csv")
+    comparison_df.to_csv("logs/evaluation/agent_comparison.csv", index=False)
+    print("对比结果已保存到 logs/evaluation/agent_comparison.csv")
 
 
 def main():
@@ -211,9 +211,9 @@ def main():
     
     # 可视化命令
     viz_parser = subparsers.add_parser("visualize", help="生成可视化报告")
-    viz_parser.add_argument("--data-dir", default="/workspace/logs/evaluation", 
+    viz_parser.add_argument("--data-dir", default="logs/evaluation", 
                            help="数据目录")
-    viz_parser.add_argument("--output", default="/workspace/logs/evaluation/dashboard.html", 
+    viz_parser.add_argument("--output", default="logs/evaluation/dashboard.html", 
                            help="输出文件路径")
     
     args = parser.parse_args()

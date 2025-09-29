@@ -106,7 +106,7 @@ class Skill:
 class SkillManager:
     """技能管理器，负责技能提取、存储和选择"""
     
-    def __init__(self, memory_dir: str = "/workspace/logs/skills"):
+    def __init__(self, memory_dir: str = "logs/skills"):
         self.skills: Dict[str, Skill] = {}
         self.trajectories: List[Dict] = []
         self.memory_dir = memory_dir
@@ -411,7 +411,7 @@ class IntrinsicRewardCalculator:
 class MemoryManager:
     """记忆管理器，处理经验存储和遗忘"""
     
-    def __init__(self, memory_dir: str = "/workspace/logs/memory"):
+    def __init__(self, memory_dir: str = "logs/memory"):
         self.memory_dir = memory_dir
         self.trajectories = []
         self.max_trajectories = 10000

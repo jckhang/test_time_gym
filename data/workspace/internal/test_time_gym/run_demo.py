@@ -207,7 +207,7 @@ def main():
         print(f"技能学习: ✅ 学习了 {skill_count} 个技能")
         
         print(f"\n📖 后续步骤:")
-        print(f"• 查看 /workspace/logs/ 目录的生成文件")
+        print(f"• 查看 logs/ 目录的生成文件")
         print(f"• 运行 'python examples/basic_usage.py' 进行更详细的测试")
         print(f"• 运行 'python examples/advanced_usage.py' 查看高级功能")
         print(f"• 使用 'python -m test_time_gym.cli --help' 查看命令行工具")

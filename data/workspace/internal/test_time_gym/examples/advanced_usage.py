@@ -164,8 +164,8 @@ def ab_testing_experiment():
     print(summary)
     
     # 保存结果
-    df.to_csv("/workspace/logs/ab_test_results.csv", index=False)
-    print("\nA/B测试结果已保存到 /workspace/logs/ab_test_results.csv")
+    df.to_csv("logs/ab_test_results.csv", index=False)
+    print("\nA/B测试结果已保存到 logs/ab_test_results.csv")
     
     return df
 
@@ -326,8 +326,8 @@ def skill_evolution_tracking():
     print(evo_df.to_string(index=False))
     
     # 保存演化数据
-    evo_df.to_csv("/workspace/logs/skill_evolution.csv", index=False)
-    print("技能演化数据已保存到 /workspace/logs/skill_evolution.csv")
+    evo_df.to_csv("logs/skill_evolution.csv", index=False)
+    print("技能演化数据已保存到 logs/skill_evolution.csv")
 
 
 def main():
@@ -337,7 +337,7 @@ def main():
     
     try:
         # 创建日志目录
-        os.makedirs("/workspace/logs", exist_ok=True)
+        os.makedirs("logs", exist_ok=True)
         
         # 运行各种演示
         ab_testing_experiment()
@@ -346,7 +346,7 @@ def main():
         skill_evolution_tracking()
         
         print("\n=== 高级演示完成 ===")
-        print("检查 /workspace/logs/ 目录查看生成的数据和报告")
+        print("检查 logs/ 目录查看生成的数据和报告")
         
     except Exception as e:
         print(f"演示过程中发生错误: {e}")

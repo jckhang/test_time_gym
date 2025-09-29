@@ -61,7 +61,7 @@ class EpisodeResult:
 class EvaluationMetrics:
     """评估指标计算器"""
     
-    def __init__(self, results_dir: str = "/workspace/logs/evaluation"):
+    def __init__(self, results_dir: str = "logs/evaluation"):
         self.results_dir = results_dir
         self.episodes: List[EpisodeResult] = []
         self.window_size = 100  # 滑动窗口大小
@@ -232,7 +232,7 @@ class EvaluationMetrics:
 class TrajectoryLogger:
     """轨迹记录器"""
     
-    def __init__(self, log_dir: str = "/workspace/logs/trajectories"):
+    def __init__(self, log_dir: str = "logs/trajectories"):
         self.log_dir = log_dir
         self.current_trajectory = []
         self.episode_count = 0
