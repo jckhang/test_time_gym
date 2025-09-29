@@ -97,5 +97,78 @@
 - [ ] 环境集成测试通过
 - [ ] 错误处理测试通过
 
+## 目录管理规则
+
+### 项目结构规范
+
+#### 根目录文件
+- `README.md` - 项目主要说明文档
+- `CLAUDE.md` - Cursor规则和目录管理规范
+- `pyproject.toml` - Python项目配置
+- `setup.py` - 包安装配置
+- `uv.lock` - 依赖锁定文件
+
+#### 核心目录结构
+```
+test_time_gym/          # 主要源代码包
+├── agents/             # 智能体实现
+├── envs/              # 环境定义
+├── llm/               # LLM相关模块
+└── utils/             # 工具函数
+
+docs/                  # 所有文档文件
+├── README.md          # 项目文档
+├── DESIGN.md          # 设计文档
+├── PROJECT_STATUS.md  # 项目状态
+└── *.md              # 其他文档
+
+scripts/               # 可执行脚本
+├── run_*.py          # 运行脚本
+├── demo_*.py         # 演示脚本
+├── *experiment*.py   # 实验脚本
+└── install*.sh       # 安装脚本
+
+configs/               # 配置文件
+├── config.yaml       # 主配置
+├── debug_config.yaml # 调试配置
+├── production_config.yaml # 生产配置
+└── *.yaml           # 其他配置
+
+experiments/           # 实验相关代码
+├── observation_system.py
+├── enhanced_skill_system.py
+└── 实验相关文件
+
+examples/              # 使用示例
+├── basic_usage.py
+├── advanced_usage.py
+└── 其他示例
+
+test/                  # 测试文件
+tests/                 # 额外测试文件
+logs/                  # 日志文件
+```
+
+#### 文件命名规范
+- 脚本文件：`run_*.py`, `demo_*.py`, `*experiment*.py`
+- 配置文件：`*.yaml`, `*.json`
+- 文档文件：`*.md`
+- 测试文件：`test_*.py`
+
+#### 目录维护原则
+1. **根目录保持整洁**：只保留核心项目文件
+2. **按功能分类**：相关文件放在同一目录
+3. **避免重复**：不要在不同目录放置相同功能的文件
+4. **定期清理**：删除临时文件和缓存
+5. **文档同步**：目录结构变化时更新文档
+
+#### 禁止在根目录放置的文件
+- 临时文件（`*.tmp`, `*.temp`）
+- 缓存文件（`__pycache__/`, `*.pyc`）
+- 日志文件（`*.log`）
+- 实验脚本（应放在`scripts/`或`experiments/`）
+- 配置文件（应放在`configs/`）
+- 文档文件（应放在`docs/`）
+
 ## 记住
 **永远不要满足于"看起来工作"，要确保"真正工作"。当用户指出问题时，立即承认并主动解决。**
