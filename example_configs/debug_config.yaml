@@ -1,0 +1,71 @@
+# 调试配置 - 最详细的日志和监控
+
+observation:
+  enabled: true
+  
+  web_dashboard:
+    enabled: true
+    port: 5555
+    auto_open_browser: true
+  
+  console_reporting:
+    enabled: true
+    interval_seconds: 2
+    verbose: true
+    show_skill_details: true
+  
+  visualization:
+    real_time_plots: true
+    trajectory_analysis: true
+    skill_evolution_plots: true
+    save_plots: true
+    plot_update_interval: 0.5
+  
+  reporting:
+    auto_generate: true
+    output_dir: "logs/debug_reports"
+    formats: ["txt", "json", "html"]
+    include_detailed_trajectories: true
+
+monitoring:
+  episode_metrics:
+    - "success_rate"
+    - "avg_reward"
+    - "avg_steps"
+    - "skill_usage_rate"
+    - "error_rate"
+  
+  skill_metrics:
+    - "learning_rate"
+    - "usage_frequency"
+    - "success_rate"
+    - "improvement_rate"
+  
+  real_time_threshold: 0.01
+  sliding_window_size: 5
+  stats_report_frequency: 5
+
+storage:
+  event_queue_size: 50000
+  trajectory_retention:
+    max_episodes_per_experiment: 5000
+    compress_old_trajectories: false
+  
+  skill_retention:
+    max_skill_history: 50000
+    auto_cleanup: false
+
+performance:
+  event_batch_size: 10
+  max_update_frequency: 50
+  max_memory_mb: 2048
+
+alerts:
+  enabled: true
+  performance_alerts:
+    low_success_rate_threshold: 0.3
+    high_error_rate_threshold: 0.1
+    slow_learning_threshold: 0.05
+  system_alerts:
+    memory_threshold_mb: 1500
+    queue_full_threshold: 0.95
