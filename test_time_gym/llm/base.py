@@ -60,21 +60,17 @@ class OpenAIBackend(ChatBackend):
         # 清理消息格式
         cleaned_messages = self._clean_messages(messages)
 
-        payload: Dict[str, Any] = {
-            "model": self.model,
-            "messages": cleaned_messages,
-            "max_tokens": max_tokens,
-        }
-        if tools:
-            payload["tools"] = tools
-            payload["tool_choice"] = tool_choice
-        resp = await self.client.chat_completion(messages=cleaned_messages, tools=tools)  # type: ignore[arg-type]
-        # print(resp)
+        # 更新ModelParams以包含新的参数
+        if isinstance(max_tokens, int) and max_tokens != 8192:  # 如果max_tokens不是默认值
+            self.client.model_params.infer_kwargs["max_tokens"] = max_tokens
+
+        # 调用anymodel的chat_completion方法
+        resp = await self.client.chat_completion(messages=cleaned_messages, tools=tools)
+
+        # 处理工具调用
         raw_calls = getattr(resp, "tool_calls", None)
         tool_calls = None
-        tool_calls_id = None
         if raw_calls:
-
             tool_calls = [
                 {
                     "id": tc.id,
@@ -86,5 +82,6 @@ class OpenAIBackend(ChatBackend):
                 }
                 for tc in raw_calls
             ]
-        print({"content": resp.content, "tool_calls": tool_calls})
+
+        logger.debug(f"LLM响应: content={resp.content[:100]}..., tool_calls={len(tool_calls) if tool_calls else 0}")
         return {"content": resp.content, "tool_calls": tool_calls}

@@ -8,6 +8,7 @@ import logging
 from typing import Any, Dict, List, Optional
 
 from ..llm.base import ChatBackend, OpenAIBackend
+from ..config import get_model_config, get_strategy_config, get_default_model
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +21,8 @@ class LLMAgent:
         backend: ChatBackend,
         system_prompt: Optional[str] = None,
         max_retries: int = 3,
-        temperature: float = 0.7
+        temperature: float = 0.7,
+        model_name: Optional[str] = None
     ):
         """
         初始化LLM智能体
@@ -30,11 +32,13 @@ class LLMAgent:
             system_prompt: 系统提示词
             max_retries: 最大重试次数
             temperature: 生成温度
+            model_name: 模型名称，用于配置管理
         """
         self.backend = backend
         self.system_prompt = system_prompt or self._get_default_system_prompt()
         self.max_retries = max_retries
         self.temperature = temperature
+        self.model_name = model_name
         self.conversation_history = []
         self.memory = []  # 存储交互历史
         self.skills = {}  # 技能库
@@ -247,22 +251,51 @@ class OpenAILLMAgent(LLMAgent):
 
     def __init__(
         self,
-        model: str = "gpt-3.5-turbo",
+        model: str = None,
+        strategy: str = "balanced",
         system_prompt: Optional[str] = None,
         max_retries: int = 3,
-        temperature: float = 0.7
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None
     ):
         """
         初始化OpenAI LLM智能体
 
         Args:
-            model: OpenAI模型名称
+            model: 模型名称，如果为None则使用默认模型
+            strategy: 策略类型
             system_prompt: 系统提示词
             max_retries: 最大重试次数
-            temperature: 生成温度
+            temperature: 生成温度，如果为None则使用配置中的值
+            max_tokens: 最大token数，如果为None则使用配置中的值
         """
+        # 获取模型配置
+        if model is None:
+            model = get_default_model()
+
+        model_config = get_model_config(model)
+        strategy_config = get_strategy_config(strategy)
+
+        # 使用配置中的参数，允许用户覆盖
+        final_temperature = temperature if temperature is not None else model_config.get("temperature", 0.7)
+        final_max_tokens = max_tokens if max_tokens is not None else model_config.get("max_tokens", 8192)
+
+        # 创建后端
         backend = OpenAIBackend(model)
-        super().__init__(backend, system_prompt, max_retries, temperature)
+
+        # 初始化基类
+        super().__init__(
+            backend=backend,
+            system_prompt=system_prompt,
+            max_retries=max_retries,
+            temperature=final_temperature,
+            model_name=model
+        )
+
+        # 设置策略相关属性
+        self.strategy = strategy
+        self.strategy_config = strategy_config
+        self.model_config = model_config
 
 
 class ToolEnabledLLMAgent(LLMAgent):
