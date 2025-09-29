@@ -350,14 +350,14 @@ class ImprovedFlightBookingEnv(gym.Env):
         elif "add" in action and "cart" in action:
             return {"type": "add_to_cart", "params": {}}
             
+        elif "confirm" in action:
+            return {"type": "confirm_payment", "params": {}}
+            
         elif "payment" in action or "pay" in action:
             return {"type": "proceed_to_payment", "params": {}}
             
         elif "card" in action:
             return {"type": "enter_card", "params": {}}
-            
-        elif "confirm" in action:
-            return {"type": "confirm_payment", "params": {}}
             
         elif "restart" in action:
             return {"type": "restart", "params": {}}
@@ -639,7 +639,8 @@ class ImprovedFlightBookingEnv(gym.Env):
         else:
             reward_breakdown.penalty = -0.1
             self.payment_state["card_entered"] = False
-            self.messages.append("支付失败：超出预算限制")
+            budget_deficit = self.cart["total"] - constraints["budget"]
+            self.messages.append(f"支付失败：超出预算${budget_deficit:.0f}")
 
         return reward_breakdown
 
