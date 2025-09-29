@@ -1,0 +1,101 @@
+# 实验观测系统配置文件
+
+observation:
+  # 是否启用观测系统
+  enabled: true
+  
+  # Web仪表板配置
+  web_dashboard:
+    enabled: true
+    port: 5000
+    host: "0.0.0.0"
+    auto_open_browser: false
+  
+  # 控制台报告配置
+  console_reporting:
+    enabled: true
+    interval_seconds: 10
+    verbose: true
+    show_skill_details: true
+  
+  # 实时可视化配置
+  visualization:
+    real_time_plots: true
+    trajectory_analysis: true
+    skill_evolution_plots: true
+    save_plots: true
+    plot_update_interval: 2  # 秒
+  
+  # 报告生成配置
+  reporting:
+    auto_generate: true
+    output_dir: "logs/observation_reports"
+    formats: ["txt", "json", "html"]
+    include_detailed_trajectories: false
+
+# 监控指标配置
+monitoring:
+  # Episode级别指标
+  episode_metrics:
+    - "success_rate"
+    - "avg_reward" 
+    - "avg_steps"
+    - "skill_usage_rate"
+    - "error_rate"
+  
+  # 技能级别指标
+  skill_metrics:
+    - "learning_rate"
+    - "usage_frequency" 
+    - "success_rate"
+    - "improvement_rate"
+  
+  # 实时性阈值（秒）
+  real_time_threshold: 0.1
+  
+  # 滑动窗口大小
+  sliding_window_size: 20
+  
+  # 统计报告频率
+  stats_report_frequency: 50  # 每50个episode
+
+# 数据存储配置
+storage:
+  # 事件队列大小
+  event_queue_size: 10000
+  
+  # 轨迹数据保留
+  trajectory_retention:
+    max_episodes_per_experiment: 1000
+    compress_old_trajectories: true
+  
+  # 技能数据保留
+  skill_retention:
+    max_skill_history: 5000
+    auto_cleanup: true
+
+# 性能配置
+performance:
+  # 批处理大小
+  event_batch_size: 100
+  
+  # 更新频率限制
+  max_update_frequency: 10  # Hz
+  
+  # 内存使用限制
+  max_memory_mb: 512
+
+# 告警配置
+alerts:
+  enabled: true
+  
+  # 性能告警
+  performance_alerts:
+    low_success_rate_threshold: 0.1
+    high_error_rate_threshold: 0.3
+    slow_learning_threshold: 0.05
+  
+  # 系统告警
+  system_alerts:
+    memory_threshold_mb: 400
+    queue_full_threshold: 0.9
